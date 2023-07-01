@@ -1,0 +1,54 @@
+<div class="content">
+  <mat-card class="mat-typography login-card">
+    <div style="margin: 0 16px">
+      <mat-card-header>
+        <mat-card-title>Sun Energy</mat-card-title>
+        <mat-card-subtitle
+          >Don't have an account yet? <b>Sign up</b></mat-card-subtitle
+        >
+      </mat-card-header>
+      <br />
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="login-card-content">
+          <mat-label>Email address</mat-label>
+          <span matPrefix class="label-padding"
+            ><mat-icon>mail_outline</mat-icon></span
+          >
+          <input matInput />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="login-card-content">
+          <mat-label>Password</mat-label>
+          <div matPrefix class="label-padding"><mat-icon>lock</mat-icon></div>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="togglePasswordVisibility()"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <p>Forgot your password?</p>
+        <br />
+      </mat-card-content>
+      <mat-card-actions class="center">
+        <button
+          mat-raised-button
+          disableRipple="true"
+          class="login-card-btn"
+          color="primary"
+          (click)="login()"
+        >
+          LOGIN
+        </button>
+        <br />
+        <button mat-raised-button disableRipple="true" class="login-card-btn">
+          LOGIN WITH GOOGLE
+        </button>
+        <br />
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</div>

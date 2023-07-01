@@ -1,0 +1,35 @@
+<mat-sidenav-container autosize class="sidenav">
+  <mat-sidenav #sidenav mode="side" opened="isExpanded">
+    <mat-nav-list>
+      <mat-list-item (click)="triggerSidenavAction()">
+        <mat-icon
+          matListItemIcon
+          class="chevron-button"
+          [ngClass]="{ rotated: isExpanded }"
+          >chevron_right
+        </mat-icon>
+      </mat-list-item>
+
+      <mat-list-item
+        *ngFor="let menuItem of menuItems"
+        [routerLink]="menuItem.routerLink"
+      >
+        <mat-icon matListItemIcon>{{ menuItem.icon }}</mat-icon>
+        <span *ngIf="isExpanded">{{ menuItem.title }}</span>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item [routerLink]="'/home'">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span *ngIf="isExpanded">Logout</span>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div>Sun Energy</div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
