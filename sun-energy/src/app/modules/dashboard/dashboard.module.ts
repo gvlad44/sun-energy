@@ -12,6 +12,8 @@ import { AddressService } from 'src/app/services/address.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { AddAddressDialogComponent } from 'src/app/components/add-address-dialog/add-address-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -34,6 +36,8 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
+    AddAddressDialogComponent,
   ],
   exports: [RouterModule],
   declarations: [DashboardComponent],

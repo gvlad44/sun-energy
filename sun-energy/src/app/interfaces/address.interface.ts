@@ -1,12 +1,30 @@
 export interface Address {
-  position: number;
   id: number;
   address: string;
-  energy_rate: number;
-  contract_start_date: string;
-  contract_end_date: string;
+  status: AddressStatus;
+  rate: number;
+  contractStartDate: string;
+  contractEndDate: string;
+  pod?: string;
+  series?: string;
+  index?: string;
 }
 
 export interface AddressResponse {
   results: Address[];
+}
+
+export interface AddressPayload {
+  address: string;
+  contractStartDate: string;
+  contractEndDate: string;
+  pod: string;
+  series: string;
+  index: string;
+}
+
+export enum AddressStatus {
+  ACTIVE = 'Active',
+  DISABLED = 'Disabled',
+  REQUESTED = 'Requested',
 }

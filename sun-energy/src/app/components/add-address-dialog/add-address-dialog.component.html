@@ -1,0 +1,48 @@
+<h2 mat-dialog-title class="mat-typography" style="text-align: center">
+  Add a new address
+</h2>
+<mat-dialog-content>
+  <br />
+  <form [formGroup]="formGroup" class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" />
+      <mat-error>Invalid address</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>POD</mat-label>
+      <input matInput formControlName="pod" />
+      <mat-error>Invalid POD! It must be 15 characters long</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Series</mat-label>
+      <input matInput formControlName="series" />
+      <mat-error>Invalid series! It must be 18 characters long</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Index</mat-label>
+      <input matInput formControlName="index" />
+      <mat-error>Invalid index</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="center">
+  <button
+    mat-raised-button
+    mat-dialog-close
+    class="btn-dialog"
+    (click)="closeDialog()"
+  >
+    Cancel
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-dialog"
+    [disabled]="validateForm()"
+    (click)="addAddress()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
+<br />

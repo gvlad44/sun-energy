@@ -1,7 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnDestroy {
+export class SignUpComponent {
   formGroup: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -19,7 +18,6 @@ export class SignUpComponent implements OnDestroy {
     ]),
     confirmPassword: new FormControl('', Validators.required),
   });
-  registerSubscription: Subscription = Subscription.EMPTY;
 
   get controls() {
     return this.formGroup.controls;
@@ -27,12 +25,8 @@ export class SignUpComponent implements OnDestroy {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnDestroy(): void {
-    this.registerSubscription.unsubscribe();
-  }
-
   registerUser() {
-    this.registerSubscription = this.authService
+    this.authService
       .register({
         email: this.controls['email'].value,
         password: this.controls['password'].value,
