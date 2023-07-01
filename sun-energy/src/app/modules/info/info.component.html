@@ -6,16 +6,37 @@
     <br />
     <mat-card-content class="card-content">
       <div class="chart">
-        <app-chart [chartData]="firstChart"></app-chart>
+        <app-chart [options]="chartOptions1"></app-chart>
       </div>
       <div class="info-paragraph">
-        <app-info-summary
-          [chartData]="firstChart"
-          [action]="'Produced'"
-          [secondAction]="'Accumulated'"
-        ></app-info-summary>
+        <h2>Current month summary</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeMonth(1, producedChart) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeMonth(0, producedChart) }} kWh
+        </p>
+        <h2>Accumulated information for 2023</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeTotal(1, producedChart) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeTotal(0, producedChart) }} kWh
+        </p>
+        <h2>Averages for 2023</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeAverage(1, producedChart) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeAverage(0, producedChart) }} kWh
+        </p>
         <br />
-        <button mat-raised-button disableRipple="true" color="primary">
+        <button
+          mat-raised-button
+          disableRipple="true"
+          color="primary"
+          (click)="navigateToPanelsPage()"
+        >
           View solar panels
         </button>
       </div>
@@ -29,13 +50,21 @@
     <br />
     <mat-card-content class="card-content">
       <div class="chart">
-        <app-chart [chartData]="secondChart"></app-chart>
+        <app-chart [options]="chartOptions2"></app-chart>
       </div>
       <div class="info-paragraph">
-        <app-info-summary
-          [chartData]="secondChart"
-          [action]="'Consumed'"
-        ></app-info-summary>
+        <h2>Current month summary</h2>
+        <p>
+          <b>{{ thirdAction }}:</b> {{ computeMonth(0, consumedChart) }} kWh
+        </p>
+        <h2>Accumulated information for 2023</h2>
+        <p>
+          <b>{{ thirdAction }}:</b> {{ computeTotal(0, consumedChart) }} kWh
+        </p>
+        <h2>Averages for 2023</h2>
+        <p>
+          <b>{{ thirdAction }}:</b> {{ computeAverage(0, consumedChart) }} kWh
+        </p>
       </div>
     </mat-card-content>
   </mat-card>

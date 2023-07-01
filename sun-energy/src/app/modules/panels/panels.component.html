@@ -1,0 +1,58 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header class="table-header">
+      <mat-card-title> Panels </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        *ngIf="dataSource.length > 0"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="navigateToPanelPage(element)"
+          >
+            {{ element.name }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="output">
+          <th mat-header-cell *matHeaderCellDef>Output</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="navigateToPanelPage(element)"
+          >
+            {{ element.output }} W/hour
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="produced">
+          <th mat-header-cell *matHeaderCellDef>
+            Produced energy for {{ getLastMonth() }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="navigateToPanelPage(element)"
+          >
+            {{ element.metrics[0].produced }} kWh
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <div *ngIf="dataSource.length == 0" style="text-align: center">
+        <br />
+        <b> There are no panels!</b>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

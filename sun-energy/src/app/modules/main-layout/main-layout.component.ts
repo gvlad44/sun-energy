@@ -12,6 +12,12 @@ export class MainLayoutComponent {
   isExpanded: boolean = false;
   menuItems: MenuItem[] = [
     { routerLink: '/dashboard', icon: 'home', title: 'Dashboard' },
+    { routerLink: '/dashboard', icon: 'payments', title: 'Bills' },
+    {
+      routerLink: '/dashboard',
+      icon: 'solar_power',
+      title: 'Secure/sell your energy',
+    },
   ];
 
   constructor(private authService: AuthService, private router: Router) {}

@@ -1,0 +1,39 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Revenue and power generated in 2023 for {{ panel.name }}</mat-card-title
+      >
+    </mat-card-header>
+    <br />
+    <mat-card-content class="card-content">
+      <div class="chart">
+        <app-chart [options]="chartOptions"></app-chart>
+      </div>
+      <div class="info-paragraph">
+        <h2>Current month summary</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeMonth(1) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeMonth(0) }} kWh
+        </p>
+        <h2>Accumulated information for 2023</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeTotal(1) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeTotal(0) }} kWh
+        </p>
+        <h2>Averages for 2023</h2>
+        <p *ngIf="secondAction">
+          <b>{{ secondAction }}</b> {{ computeAverage(1) }} RON
+        </p>
+        <p>
+          <b>{{ action }}:</b> {{ computeAverage(0) }} kWh
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+</div>

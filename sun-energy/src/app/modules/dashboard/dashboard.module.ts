@@ -15,13 +15,22 @@ import { AddAddressDialogComponent } from 'src/app/components/add-address-dialog
 import { MatDialogModule } from '@angular/material/dialog';
 import { ExtendContractDialogComponent } from 'src/app/components/extend-contract-dialog/extend-contract-dialog.component';
 import { DeleteContractDialogComponent } from 'src/app/components/delete-contract-dialog/delete-contract-dialog.component';
+import { PanelsModule } from '../panels/panels.module';
+import { PanelsComponent } from '../panels/panels.component';
+import { PanelComponent } from '../panel/panel.component';
+import { PanelModule } from '../panel/panel.module';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', component: DashboardComponent },
-      { path: ':id', component: InfoComponent },
+      {
+        path: ':id',
+        component: InfoComponent,
+      },
+      { path: ':id/panels', component: PanelsComponent },
+      { path: ':id/panels/:panelId', component: PanelComponent },
     ],
   },
 ];
@@ -40,6 +49,8 @@ const routes: Routes = [
     AddAddressDialogComponent,
     ExtendContractDialogComponent,
     DeleteContractDialogComponent,
+    PanelsModule,
+    PanelModule,
   ],
   exports: [RouterModule],
   declarations: [DashboardComponent],

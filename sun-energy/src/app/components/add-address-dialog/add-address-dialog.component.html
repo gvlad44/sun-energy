@@ -32,7 +32,12 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions class="center">
-  <button mat-raised-button class="btn-dialog" (close)="(closeDialog)">
+  <button
+    mat-raised-button
+    mat-dialog-close
+    class="btn-dialog"
+    (close)="(closeDialog)"
+  >
     Cancel
   </button>
   <button

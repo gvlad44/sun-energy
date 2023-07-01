@@ -2,6 +2,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -23,6 +24,7 @@ interface Address {
   pod: string;
   series: string;
   index: string;
+  consumed: [{ newIndex: number; timestamp: string }];
 }
 
 interface AddressPayload {
@@ -44,7 +46,7 @@ export const addressController = {
     try {
       const userid = auth.currentUser.uid;
       const reqData: AddressPayload = req.body;
-      const snapshot = await addDoc(collection(db, "address"), {
+      const snapshot = await addDoc(collection(db, "addresses"), {
         address: reqData.address,
         city: reqData.city,
         status: "Requested",
@@ -55,6 +57,7 @@ export const addressController = {
         pod: reqData.pod,
         series: reqData.series,
         index: reqData.index,
+        consumed: [],
         userid: userid,
       });
 
@@ -74,11 +77,41 @@ export const addressController = {
     }
   },
 
+  addNewIndex: async (req, res) => {
+    try {
+      const uuid = req.params.id;
+      const newIndexObj = req.body.newIndexObj;
+
+      const snapshot = await getDoc(doc(db, "addresses", uuid));
+
+      const consumed = (snapshot.data() as Address).consumed
+        ? (snapshot.data() as Address).consumed
+        : [];
+
+      consumed.unshift(newIndexObj);
+
+      await updateDoc(doc(db, "addresses", uuid), {
+        consumed: consumed,
+      });
+
+      res.status(200).send({
+        message: "Added new index",
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to submit new index",
+      });
+    }
+  },
+
   getAddresses: async (req, res) => {
     try {
       const userid = auth.currentUser.uid;
 
-      const q = query(collection(db, "address"), where("userid", "==", userid));
+      const q = query(
+        collection(db, "addresses"),
+        where("userid", "==", userid)
+      );
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
@@ -93,9 +126,36 @@ export const addressController = {
         }),
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send({
         message: "Failed to get all addresses",
+      });
+    }
+  },
+
+  getAddress: async (req, res) => {
+    try {
+      const addressId = req.params.id;
+
+      const q = query(collection(db, "addresses"));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        res.status(400).send({
+          message: "There are no panels available",
+        });
+      }
+
+      res.status(200).send({
+        results: snapshot.docs
+          .filter((doc) => doc.id === addressId)
+          .map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          }),
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to get panel",
       });
     }
   },
@@ -105,7 +165,7 @@ export const addressController = {
       const uuid = req.params.id;
       const extendedContractNewEndDate = req.body.contractEndDate;
 
-      await updateDoc(doc(db, "address", uuid), {
+      await updateDoc(doc(db, "addresses", uuid), {
         contractEndDate: extendedContractNewEndDate,
       });
 
@@ -113,7 +173,6 @@ export const addressController = {
         message: "Extended contract successfully",
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send({
         message: "Failed to extend address contract",
       });
@@ -124,7 +183,7 @@ export const addressController = {
     try {
       const uuid = req.params.id;
 
-      await updateDoc(doc(db, "address", uuid), {
+      await updateDoc(doc(db, "addresses", uuid), {
         status: "Disabled",
       });
 
@@ -132,7 +191,6 @@ export const addressController = {
         message: "Launched contract deletion successfully",
       });
     } catch (err) {
-      console.log(err);
       res.status(400).send({
         message: "Failed to launch contract deletion ",
       });

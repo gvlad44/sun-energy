@@ -8,6 +8,12 @@ export interface Address {
   pod?: string;
   series?: string;
   index?: string;
+  consumed?: ConsumedMetrics[];
+}
+
+export interface ConsumedMetrics {
+  newIndex: number;
+  timestamp: string;
 }
 
 export interface AddressResponse {
