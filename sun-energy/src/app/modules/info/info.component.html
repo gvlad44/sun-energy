@@ -1,0 +1,41 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Revenue and power generated in 2023 </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content class="card-content">
+      <div class="chart">
+        <app-chart [chartData]="firstChart"></app-chart>
+      </div>
+      <div class="info-paragraph">
+        <app-info-summary
+          [chartData]="firstChart"
+          [action]="'Produced'"
+          [secondAction]="'Accumulated'"
+        ></app-info-summary>
+        <button mat-raised-button disableRipple="true" color="primary">
+          View more details
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> Power consumed in 2023 </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content class="card-content">
+      <div class="chart">
+        <app-chart [chartData]="secondChart"></app-chart>
+      </div>
+      <div class="info-paragraph">
+        <app-info-summary
+          [chartData]="secondChart"
+          [action]="'Consumed'"
+        ></app-info-summary>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

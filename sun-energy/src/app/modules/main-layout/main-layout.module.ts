@@ -7,27 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: MainLayoutComponent,
-    children: [
-      {
-        path: 'dashboard',
-        loadChildren: () =>
-          import('../dashboard/dashboard.module').then(
-            (m) => m.DashboardModule
-          ),
-      },
-    ],
-  },
-];
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule,
     CommonModule,
     MatToolbarModule,
     MatIconModule,
