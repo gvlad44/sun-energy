@@ -1,0 +1,61 @@
+<h2 mat-dialog-title class="mat-typography" style="text-align: center">
+  Add a new listing to the market
+</h2>
+<br />
+<mat-dialog-content>
+  <form [formGroup]="formGroup" class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Address</mat-label>
+      <mat-select formControlName="address" [(value)]="selectedAddress">
+        <mat-option *ngFor="let address of addresses" [value]="address.address">
+          {{ address.address }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Quantity</mat-label>
+      <input
+        matInput
+        formControlName="quantity"
+        readonly
+        [value]="selectedQuantity"
+      />
+      <mat-error>Invalid quantity</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" />
+      <mat-error
+        >Invalid price! The price must be at least the rate from the contract
+        and at most 4 times that value</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Maturity date</mat-label>
+      <mat-select formControlName="maturityDate" [(value)]="maturityDate">
+        <mat-option [value]="6">6 months</mat-option>
+        <mat-option [value]="12">12 months</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="center">
+  <button
+    mat-raised-button
+    mat-dialog-close
+    class="btn-dialog"
+    (click)="closeDialog()"
+  >
+    Cancel
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-dialog"
+    [disabled]="selectedQuantity == 0"
+    (click)="listFuture()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
+<br />

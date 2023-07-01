@@ -22,7 +22,7 @@ import { PanelModule } from '../panel/panel.module';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     children: [
       { path: '', component: DashboardComponent },
       {

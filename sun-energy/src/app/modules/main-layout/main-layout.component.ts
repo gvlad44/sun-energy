@@ -14,7 +14,7 @@ export class MainLayoutComponent {
     { routerLink: '/dashboard', icon: 'home', title: 'Dashboard' },
     { routerLink: '/dashboard', icon: 'payments', title: 'Bills' },
     {
-      routerLink: '/dashboard',
+      routerLink: '/future',
       icon: 'solar_power',
       title: 'Secure/sell your energy',
     },

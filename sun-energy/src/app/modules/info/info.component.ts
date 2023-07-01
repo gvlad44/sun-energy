@@ -20,7 +20,7 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class InfoComponent implements OnInit {
   action: string = 'Produced';
-  secondAction: string = 'Accumulated';
+  secondAction: string = 'Accumulated*';
   thirdAction: string = 'Consumed';
 
   producedChart: ChartData = {

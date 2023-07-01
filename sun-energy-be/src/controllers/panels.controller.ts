@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { firebaseConfig } from "../config/db.ts";
 import moment from "moment";
+import { getAuth } from "firebase/auth";
 
 interface Panel {
   uuid: string;
@@ -38,6 +39,7 @@ const peakSunHours = [
 ];
 
 const db = getFirestore(firebaseConfig);
+const auth = getAuth(firebaseConfig);
 
 export const panelsController = {
   addPanel: async (req, res) => {
@@ -49,11 +51,11 @@ export const panelsController = {
       for (let i = 0; i < reqData.noOfMonths; i++) {
         const currentDate = moment(date, "MM/YYYY").subtract(i, "month");
         metrics.push({
-          produced: (
+          produced: Math.round(
             reqData.output *
-            peakSunHours[currentDate.month()] *
-            moment(currentDate, "MM/YYYY").daysInMonth()
-          ).toFixed(2),
+              peakSunHours[currentDate.month()] *
+              moment(currentDate, "MM/YYYY").daysInMonth()
+          ),
           timestamp: currentDate.format("MM/YYYY"),
         });
       }
@@ -88,7 +90,33 @@ export const panelsController = {
     }
   },
 
-  getPanels: async (req, res) => {
+  getPanelsForUser: async (req, res) => {
+    try {
+      const userid = auth.currentUser.uid;
+
+      const q = query(collection(db, "panels"), where("userId", "==", userid));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        res.status(400).send({
+          message: "There are no panels available",
+        });
+      }
+
+      res.status(200).send({
+        results: snapshot.docs.map((doc) => {
+          return { id: doc.id, ...doc.data() };
+        }),
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to get all panels",
+      });
+    }
+  },
+
+  getPanelsForAddress: async (req, res) => {
     try {
       const addressId = req.params.id;
 

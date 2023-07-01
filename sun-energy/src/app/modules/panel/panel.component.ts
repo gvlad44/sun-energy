@@ -16,7 +16,7 @@ import { PanelService } from 'src/app/services/panel.service';
 })
 export class PanelComponent implements OnInit {
   action: string = 'Produced';
-  secondAction: string = 'Accumulated';
+  secondAction: string = 'Accumulated*';
   chartData: ChartData = {
     labels: [],
     data: [

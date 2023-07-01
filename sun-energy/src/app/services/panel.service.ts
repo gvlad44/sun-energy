@@ -7,6 +7,10 @@ export class PanelService {
 
   constructor(private http: HttpClient) {}
 
+  getPanelsForUser() {
+    return this.http.get(`${this.apiPath}`);
+  }
+
   getPanels(addressId: string) {
     return this.http.get(`${this.apiPath}/address/${addressId}`);
   }

@@ -45,8 +45,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openDialog(compoenent: any, data?: any) {
-    const dialogRef = this.dialog.open(compoenent, {
+  openDialog(component: any, data?: any) {
+    const dialogRef = this.dialog.open(component, {
       data: data ? data : null,
       autoFocus: false,
       width: '35%',

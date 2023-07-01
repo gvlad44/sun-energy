@@ -18,12 +18,18 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'dashboard',
+    path: '',
     component: MainLayoutComponent,
     loadChildren: () =>
       import('./modules/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
+  },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    loadChildren: () =>
+      import('./modules/futures/futures.module').then((m) => m.FuturesModule),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
