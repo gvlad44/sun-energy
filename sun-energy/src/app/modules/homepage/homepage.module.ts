@@ -8,7 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -25,9 +24,7 @@ const routes: Routes = [{ path: '', component: HomepageComponent }];
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    HttpClientModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
   providers: [AuthService],
   exports: [RouterModule],

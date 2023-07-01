@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [{ path: '', component: SignUpComponent }];
 
@@ -25,7 +24,6 @@ const routes: Routes = [{ path: '', component: SignUpComponent }];
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
   providers: [AuthService],
 })

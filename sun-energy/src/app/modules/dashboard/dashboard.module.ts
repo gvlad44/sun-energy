@@ -19,10 +19,11 @@ import { PanelsModule } from '../panels/panels.module';
 import { PanelsComponent } from '../panels/panels.component';
 import { PanelComponent } from '../panel/panel.component';
 import { PanelModule } from '../panel/panel.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     children: [
       { path: '', component: DashboardComponent },
       {
@@ -51,6 +52,7 @@ const routes: Routes = [
     DeleteContractDialogComponent,
     PanelsModule,
     PanelModule,
+    MatTooltipModule,
   ],
   exports: [RouterModule],
   declarations: [DashboardComponent],

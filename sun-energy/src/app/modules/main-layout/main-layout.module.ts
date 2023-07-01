@@ -7,34 +7,50 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { AuthInterceptor } from 'src/app/utils/auth.interceptor';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { InfoComponent } from '../info/info.component';
+import { PanelsComponent } from '../panels/panels.component';
+import { PanelComponent } from '../panel/panel.component';
+import { FuturesComponent } from '../futures/futures.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    children: [
+      {
+        path: 'dashboard',
+        children: [
+          { path: '', component: DashboardComponent },
+          {
+            path: ':id',
+            component: InfoComponent,
+          },
+          { path: ':id/panels', component: PanelsComponent },
+          { path: ':id/panels/:panelId', component: PanelComponent },
+        ],
+      },
+      {
+        path: 'future',
+        children: [{ path: '', component: FuturesComponent }],
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [
-    RouterModule,
+    RouterModule.forChild(routes),
     CommonModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    HttpClientModule,
   ],
   exports: [MainLayoutComponent],
   declarations: [MainLayoutComponent],
-  providers: [
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useFactory: function (router: Router, authService: AuthService) {
-        return new AuthInterceptor(router, authService);
-      },
-      multi: true,
-      deps: [Router, AuthService],
-    },
-  ],
+  providers: [AuthService],
 })
 export class MainLayoutModule {}
