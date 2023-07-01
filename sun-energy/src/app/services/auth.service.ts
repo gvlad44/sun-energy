@@ -23,6 +23,7 @@ export class AuthService {
 
   saveUserData(user: User) {
     localStorage.setItem('uuid', user.uuid);
+    localStorage.setItem('email', user.email);
   }
 
   clearUserData() {

@@ -1,9 +1,12 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   getFirestore,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { firebaseConfig } from "../config/db.ts";
@@ -41,7 +44,7 @@ export const futuresController = {
       const snapshot = await addDoc(collection(db, "futures"), {
         quantity: reqData.quantity,
         rate: reqData.rate,
-        total: reqData.rate * reqData.quantity,
+        total: Number((reqData.rate * reqData.quantity).toFixed(2)),
         maturityDate: moment(new Date(), "DD/MM/YYYY")
           .add(reqData.maturityDate, "month")
           .endOf("month")
@@ -79,7 +82,7 @@ export const futuresController = {
 
       if (!snapshot) {
         res.status(400).send({
-          message: "There are no panels available",
+          message: "There are no listed energy futures",
         });
       }
 
@@ -90,7 +93,7 @@ export const futuresController = {
       });
     } catch (err) {
       res.status(400).send({
-        message: "Failed to get all panels",
+        message: "Failed to get all listed energy futures",
       });
     }
   },
@@ -106,7 +109,7 @@ export const futuresController = {
 
       if (!snapshot) {
         res.status(400).send({
-          message: "There are no panels available",
+          message: "There are no listed energy futures",
         });
       }
 
@@ -119,7 +122,100 @@ export const futuresController = {
       });
     } catch (err) {
       res.status(400).send({
-        message: "Failed to get all panels",
+        message: "Failed to get all listed energy futures",
+      });
+    }
+  },
+
+  getAvailableListings: async (req, res) => {
+    try {
+      const userid = auth.currentUser.uid;
+
+      const q = query(collection(db, "futures"), where("userId", "!=", userid));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        res.status(400).send({
+          message: "There are no listed energy futures",
+        });
+      }
+
+      res.status(200).send({
+        results: snapshot.docs
+          .filter((doc) => doc.data().boughtAt.length == 0)
+          .map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          }),
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to get all listed energy futures",
+      });
+    }
+  },
+
+  getBoughtListings: async (req, res) => {
+    try {
+      const userid = auth.currentUser.uid;
+
+      const q = query(
+        collection(db, "futures"),
+        where("buyerId", "==", userid)
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        res.status(400).send({
+          message: "There are no bought energy futures",
+        });
+      }
+
+      res.status(200).send({
+        results: snapshot.docs.map((doc) => {
+          return { id: doc.id, ...doc.data() };
+        }),
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to get all bought energy futures",
+      });
+    }
+  },
+
+  buyListedFuture: async (req, res) => {
+    try {
+      const buyerid = auth.currentUser.uid;
+      const uuid = req.params.id;
+
+      await updateDoc(doc(db, "futures", uuid), {
+        boughtAt: moment(new Date(), "DD/MM/YYYY").format("DD/MM/YYYY"),
+        buyerId: buyerid,
+      });
+
+      res.status(200).send({
+        message: "Bought energy future successfully",
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to buy energy future",
+      });
+    }
+  },
+
+  deleteListedFuture: async (req, res) => {
+    try {
+      const uuid = req.params.id;
+
+      await deleteDoc(doc(db, "futures", uuid));
+
+      res.status(200).send({
+        message: "Deleted listed energy future",
+      });
+    } catch (err) {
+      res.status(400).send({
+        message: "Failed to delete listing",
       });
     }
   },

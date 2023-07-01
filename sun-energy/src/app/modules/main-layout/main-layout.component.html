@@ -27,8 +27,12 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar
+      color="primary"
+      style="display: flex; justify-content: space-between"
+    >
       <div>Sun Energy</div>
+      <div>Hi, {{ user }}</div>
     </mat-toolbar>
     <div>
       <router-outlet></router-outlet>

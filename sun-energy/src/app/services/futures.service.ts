@@ -5,6 +5,7 @@ import { FuturePayload } from '../interfaces/futures.interface';
 @Injectable({ providedIn: 'root' })
 export class FuturesService {
   private apiPath = 'http://localhost:3001/api/futures';
+  private apiPathOther = 'http://localhost:3001/api';
 
   constructor(private http: HttpClient) {}
 
@@ -18,5 +19,21 @@ export class FuturesService {
 
   getAddressListedFutures(id: string) {
     return this.http.get(`${this.apiPath}/${id}`);
+  }
+
+  getAvailableListings() {
+    return this.http.get(`${this.apiPathOther}/available`);
+  }
+
+  getBoughtListings() {
+    return this.http.get(`${this.apiPathOther}/bought`);
+  }
+
+  buyListedFuture(id: string) {
+    return this.http.patch(`${this.apiPath}/${id}`, {});
+  }
+
+  deleteListedFuture(id: string) {
+    return this.http.delete(`${this.apiPath}/${id}`);
   }
 }

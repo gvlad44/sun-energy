@@ -1,0 +1,69 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header class="table-header">
+      <mat-card-title> Available listings on the market</mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput (keyup)="applyFilter($event)" #input />
+      </mat-form-field>
+
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity of energy (kWh)</th>
+          <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef>Listing price (RON/kWh)</th>
+          <td mat-cell *matCellDef="let element">{{ element.rate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total price (RON)</th>
+          <td mat-cell *matCellDef="let element">{{ element.total }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="maturityDate">
+          <th mat-header-cell *matHeaderCellDef>
+            The date by which the energy will be supplied
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.maturityDate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Listing date</th>
+          <td mat-cell *matCellDef="let element">{{ element.createdAt }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              matTooltip="Buy"
+              matTooltipPosition="above"
+              color="primary"
+              (click)="buyListedFuture(element)"
+            >
+              <mat-icon> shopping_cart </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        #paginator="matPaginator"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+      <br />
+    </mat-card-content>
+  </mat-card>
+</div>

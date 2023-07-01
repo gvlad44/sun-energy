@@ -12,11 +12,19 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MarketComponent } from '../market/market.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
     path: 'future',
-    children: [{ path: '', component: FuturesComponent }],
+    children: [
+      { path: '', component: FuturesComponent },
+      {
+        path: 'market',
+        component: MarketComponent,
+      },
+    ],
   },
 ];
 
@@ -32,6 +40,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatTooltipModule,
     MatDialogModule,
+    CommonModule,
   ],
   exports: [FuturesComponent],
   declarations: [FuturesComponent],

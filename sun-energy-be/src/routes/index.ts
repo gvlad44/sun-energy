@@ -45,7 +45,23 @@ router.get(
   futuresController.getAddressListedFutures
 );
 router.get(
-  "/futures/",
+  "/futures",
   middlewares.isAuth,
   futuresController.getUserListedFutures
+);
+router.get(
+  "/available",
+  middlewares.isAuth,
+  futuresController.getAvailableListings
+);
+router.get("/bought", middlewares.isAuth, futuresController.getBoughtListings);
+router.patch(
+  "/futures/:id",
+  middlewares.isAuth,
+  futuresController.buyListedFuture
+);
+router.delete(
+  "/futures/:id",
+  middlewares.isAuth,
+  futuresController.deleteListedFuture
 );

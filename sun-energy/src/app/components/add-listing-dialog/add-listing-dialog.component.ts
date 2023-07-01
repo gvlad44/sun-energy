@@ -49,7 +49,7 @@ export class AddListingDialogComponent implements OnInit {
   selectedQuantity = 0;
   contractRate = 0;
   consumedMonths!: number[];
-  maturityDate = 6;
+  maturityDate = 12;
 
   formGroup: FormGroup = new FormGroup({
     address: new FormControl(this.selectedAddress),
