@@ -9,11 +9,12 @@ import { MatTableModule } from '@angular/material/table';
 import { InfoComponent } from '../info/info.component';
 import { InfoModule } from '../info/info.module';
 import { AddressService } from 'src/app/services/address.service';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AddAddressDialogComponent } from 'src/app/components/add-address-dialog/add-address-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ExtendContractDialogComponent } from 'src/app/components/extend-contract-dialog/extend-contract-dialog.component';
+import { DeleteContractDialogComponent } from 'src/app/components/delete-contract-dialog/delete-contract-dialog.component';
 
 const routes: Routes = [
   {
@@ -33,11 +34,12 @@ const routes: Routes = [
     MatCardModule,
     MatTableModule,
     InfoModule,
-    MatMenuModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
     AddAddressDialogComponent,
+    ExtendContractDialogComponent,
+    DeleteContractDialogComponent,
   ],
   exports: [RouterModule],
   declarations: [DashboardComponent],

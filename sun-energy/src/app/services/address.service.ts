@@ -15,4 +15,14 @@ export class AddressService {
   addAddress(payload: AddressPayload) {
     return this.http.post(`${this.apiPath}/address`, payload);
   }
+
+  extendContract(id: string, newContractEndDate: string) {
+    return this.http.patch(`${this.apiPath}/address/${id}`, {
+      contractEndDate: newContractEndDate,
+    });
+  }
+
+  deleteContract(id: string) {
+    return this.http.delete(`${this.apiPath}/address/${id}`);
+  }
 }

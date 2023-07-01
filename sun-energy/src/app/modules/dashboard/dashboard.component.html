@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-header class="table-header">
       <mat-card-title> Addresses </mat-card-title>
-      <button mat-fab extended color="primary" (click)="openDialog()">
+      <button mat-fab extended color="primary" (click)="addAddress()">
         <mat-icon> library_add </mat-icon>
         Add address
       </button>
@@ -17,33 +17,82 @@
       >
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef>Address</th>
-          <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="
+              element.status === 'Active' ? navigateToInfoPage(element) : null
+            "
+          >
+            {{ element.address }} , {{ element.city }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Status</th>
-          <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="
+              element.status === 'Active' ? navigateToInfoPage(element) : null
+            "
+          >
+            {{ element.status }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="energy_rate">
           <th mat-header-cell *matHeaderCellDef>Energy rate</th>
-          <td mat-cell *matCellDef="let element">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="
+              element.status === 'Active' ? navigateToInfoPage(element) : null
+            "
+          >
             {{ element.rate + " RON/kWh" }}
           </td>
         </ng-container>
 
-        <!-- Symbol Column -->
         <ng-container matColumnDef="contract_start_date">
           <th mat-header-cell *matHeaderCellDef>Contract start date</th>
-          <td mat-cell *matCellDef="let element">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="
+              element.status === 'Active' ? navigateToInfoPage(element) : null
+            "
+          >
             {{ element.contractStartDate }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="contract_end_date">
           <th mat-header-cell *matHeaderCellDef>Contract end date</th>
-          <td mat-cell *matCellDef="let element">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            (click)="
+              element.status === 'Active' ? navigateToInfoPage(element) : null
+            "
+          >
             {{ element.contractEndDate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              [disabled]="disableContractExtension(element)"
+              (click)="extendContract(element)"
+            >
+              <mat-icon> edit </mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteContract(element)">
+              <mat-icon> delete </mat-icon>
+            </button>
           </td>
         </ng-container>
 
@@ -51,13 +100,12 @@
         <tr
           mat-row
           *matRowDef="let row; columns: displayedColumns"
-          (click)="row.status === 'Active' ? navigateToInfoPage(row) : null"
           [ngClass]="row.status !== 'Active' ? 'disabled' : ''"
         ></tr>
       </table>
       <div *ngIf="dataSource.length == 0" style="text-align: center">
         <br />
-        <b>There are no addresses! Add one with the button above.</b>
+        <b> There are no addresses! Add one with the button above. </b>
       </div>
     </mat-card-content>
   </mat-card>

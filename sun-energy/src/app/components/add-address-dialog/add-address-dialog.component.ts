@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -10,7 +10,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AddressService } from 'src/app/services/address.service';
-import * as dayjs from 'dayjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-address-dialog',
@@ -29,6 +29,7 @@ import * as dayjs from 'dayjs';
 export class AddAddressDialogComponent {
   formGroup: FormGroup = new FormGroup({
     address: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required),
     pod: new FormControl('', [
       Validators.required,
       Validators.minLength(15),
@@ -54,6 +55,7 @@ export class AddAddressDialogComponent {
   validateForm() {
     return (
       this.controls['address'].hasError('required') ||
+      this.controls['city'].hasError('required') ||
       this.controls['pod'].hasError('required') ||
       this.controls['pod'].hasError('minlength') ||
       this.controls['pod'].hasError('maxlength') ||
@@ -65,16 +67,21 @@ export class AddAddressDialogComponent {
   }
 
   addAddress() {
-    const start_date = dayjs().add(7, 'day');
+    const start_date = moment(new Date(), 'DD/MM/YYYY').add(1, 'month');
 
     this.addressService
       .addAddress({
         address: this.controls['address'].value,
-        contractStartDate: start_date.format('DD/MM/YYYY'),
-        contractEndDate: start_date.add(1, 'year').format('DD/MM/YYYY'),
+        city: this.controls['city'].value,
+        contractStartDate: start_date.startOf('month').format('DD/MM/YYYY'),
+        contractEndDate: start_date
+          .add(1, 'year')
+          .endOf('month')
+          .format('DD/MM/YYYY'),
         pod: this.controls['pod'].value,
         series: this.controls['series'].value,
         index: this.controls['index'].value,
+        userid: String(localStorage.getItem('currentUser')),
       })
       .subscribe({
         next: () => {

@@ -1,5 +1,5 @@
 export interface Address {
-  id: number;
+  id: string;
   address: string;
   status: AddressStatus;
   rate: number;
@@ -16,11 +16,13 @@ export interface AddressResponse {
 
 export interface AddressPayload {
   address: string;
+  city: string;
   contractStartDate: string;
   contractEndDate: string;
   pod: string;
   series: string;
   index: string;
+  userid: string;
 }
 
 export enum AddressStatus {

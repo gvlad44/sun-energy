@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="mat-typography" style="text-align: center">
+  Extend your contract for the address: <br />
+  {{ data.address }}
+</h2>
+<mat-dialog-content>
+  <br />
+  <form class="content">
+    <mat-form-field appearance="outline">
+      <mat-label>Contract extension length</mat-label>
+      <mat-select [(value)]="selectedValue">
+        <mat-option [value]="option.value" *ngFor="let option of options">{{
+          option.text
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="center">
+  <button mat-raised-button class="btn-dialog" (click)="closeDialog()">
+    Cancel
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-dialog"
+    (click)="extendContract()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
+<br />

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChartData } from 'src/app/interfaces/chart.interface';
 
 @Component({
@@ -30,4 +31,6 @@ export class InfoComponent {
       },
     ],
   };
+
+  constructor(private route: ActivatedRoute) {}
 }

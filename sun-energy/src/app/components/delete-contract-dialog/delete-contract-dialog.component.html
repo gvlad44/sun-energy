@@ -1,0 +1,17 @@
+<h2 mat-dialog-title class="mat-typography" style="text-align: center">
+  Are you sure you want to cancel your contract for {{ data.address }} ?
+</h2>
+<mat-dialog-actions class="center">
+  <button mat-raised-button class="btn-dialog" (click)="closeDialog()">
+    Cancel
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-dialog"
+    (click)="deleteContract()"
+  >
+    Submit
+  </button>
+</mat-dialog-actions>
+<br />
