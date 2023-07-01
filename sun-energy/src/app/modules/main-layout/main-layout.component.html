@@ -20,7 +20,7 @@
 
       <mat-divider></mat-divider>
 
-      <mat-list-item [routerLink]="['/login']">
+      <mat-list-item (click)="logout()">
         <mat-icon matListItemIcon>logout</mat-icon>
         <span *ngIf="isExpanded">Logout</span>
       </mat-list-item>

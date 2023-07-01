@@ -8,6 +8,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { InfoComponent } from '../info/info.component';
 import { InfoModule } from '../info/info.module';
+import { AddressService } from 'src/app/services/address.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
   {
@@ -27,8 +31,12 @@ const routes: Routes = [
     MatCardModule,
     MatTableModule,
     InfoModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   exports: [RouterModule],
   declarations: [DashboardComponent],
+  providers: [AddressService],
 })
 export class DashboardModule {}

@@ -1,3 +1,8 @@
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .container {
   display: flex;
   flex-direction: column;

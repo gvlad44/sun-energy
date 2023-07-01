@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
-import { HomepageComponent } from './homepage.component';
+
+import { SignUpComponent } from './sign-up.component';
+import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
-const routes: Routes = [{ path: '', component: HomepageComponent }];
+const routes: Routes = [{ path: '', component: SignUpComponent }];
 
 @NgModule({
-  declarations: [HomepageComponent],
+  declarations: [SignUpComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -24,12 +24,9 @@ const routes: Routes = [{ path: '', component: HomepageComponent }];
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDividerModule,
-    HttpClientModule,
     ReactiveFormsModule,
     HttpClientModule,
   ],
   providers: [AuthService],
-  exports: [RouterModule],
 })
-export class HomepageModule {}
+export class SignUpModule {}

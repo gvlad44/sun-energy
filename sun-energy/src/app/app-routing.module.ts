@@ -12,6 +12,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'signup',
+    loadChildren: () =>
+      import('./modules/sign-up/sign-up.module').then((m) => m.SignUpModule),
+    pathMatch: 'full',
+  },
+  {
     path: 'dashboard',
     component: MainLayoutComponent,
     loadChildren: () =>
