@@ -43,7 +43,7 @@ export const futuresController = {
 
       const snapshot = await addDoc(collection(db, "futures"), {
         quantity: reqData.quantity,
-        rate: reqData.rate,
+        rate: Number(reqData.rate),
         total: Number((reqData.rate * reqData.quantity).toFixed(2)),
         maturityDate: moment(new Date(), "DD/MM/YYYY")
           .add(reqData.maturityDate, "month")
@@ -57,7 +57,7 @@ export const futuresController = {
       });
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "Failed to add new list item",
         });
       }
@@ -81,7 +81,7 @@ export const futuresController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no listed energy futures",
         });
       }
@@ -108,7 +108,7 @@ export const futuresController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no listed energy futures",
         });
       }
@@ -136,7 +136,7 @@ export const futuresController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no listed energy futures",
         });
       }
@@ -167,7 +167,7 @@ export const futuresController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no bought energy futures",
         });
       }

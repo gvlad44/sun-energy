@@ -1,0 +1,69 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title *ngIf="address">
+        Bills for address {{ address.address }}
+      </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let bill of bills">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Bill for {{ bill.dateBilled }} </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Bill details for the month of {{ bill.dateBilled }}</p>
+          <br />
+          <div class="content">
+            <div class="content-row">
+              <p>Emitted at: {{ bill.createdAt }}</p>
+            </div>
+            <div class="content-row">
+              <p>POD: {{ address.pod }}</p>
+              <p>Series: {{ address.series }}</p>
+            </div>
+            <div class="content-row">
+              <p>Old index: {{ computeOldIndex(address) }}</p>
+              <p>New index: {{ computeNewIndex(address) }}</p>
+            </div>
+            <div class="content-row">
+              <p>Consumed: {{ bill.consumed }} kWh</p>
+              <p>Produced: {{ bill.produced }} kWh</p>
+            </div>
+            <div class="content-row">
+              <p>Energy rate: {{ bill.rate }} RON/kWh</p>
+              <p>Total (including listings): {{ computeTotal(bill) }}</p>
+            </div>
+            <div
+              style="display: flex; justify-content: flex-end"
+              *ngIf="!bill.isPaid; else isPaid"
+            >
+              <button
+                *ngIf="bill.total > 0; else noPay"
+                mat-raised-button
+                color="primary"
+                class="pay-btn"
+              >
+                Pay
+              </button>
+              <ng-template #noPay>
+                <b> Nothing to pay </b>
+                <mat-icon color="primary" style="margin-left: 0.5rem">
+                  verified
+                </mat-icon>
+              </ng-template>
+            </div>
+            <ng-template #isPaid>
+              <div style="display: flex; justify-content: flex-end">
+                <b> Bill is paid </b>
+                <mat-icon color="primary" style="margin-left: 0.5rem">
+                  verified
+                </mat-icon>
+              </div>
+            </ng-template>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+</div>

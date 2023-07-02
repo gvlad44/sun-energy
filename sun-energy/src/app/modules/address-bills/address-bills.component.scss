@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 8rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pay-btn {
+  width: 10rem;
+}

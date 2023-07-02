@@ -7,13 +7,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { InfoComponent } from '../info/info.component';
 import { PanelsComponent } from '../panels/panels.component';
 import { PanelComponent } from '../panel/panel.component';
 import { FuturesComponent } from '../futures/futures.component';
+import { MarketComponent } from '../market/market.component';
+import { BillsComponent } from '../bills/bills.component';
+import { AddressBillsComponent } from '../address-bills/address-bills.component';
 
 const routes: Routes = [
   {
@@ -33,7 +36,23 @@ const routes: Routes = [
       },
       {
         path: 'future',
-        children: [{ path: '', component: FuturesComponent }],
+        children: [
+          { path: '', component: FuturesComponent },
+          {
+            path: 'market',
+            component: MarketComponent,
+          },
+        ],
+      },
+      {
+        path: 'bills',
+        children: [
+          { path: '', component: BillsComponent },
+          {
+            path: ':id',
+            component: AddressBillsComponent,
+          },
+        ],
       },
     ],
   },

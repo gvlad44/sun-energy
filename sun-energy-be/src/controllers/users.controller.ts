@@ -24,7 +24,7 @@ export const userController = {
       );
 
       if (!firebaseRes.user) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "Failed to create user",
         });
       }
@@ -49,7 +49,7 @@ export const userController = {
       );
 
       if (!firebaseRes.user) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "Wrong email and/or password",
         });
       }

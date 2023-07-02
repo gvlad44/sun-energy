@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './modules/main-layout/main-layout.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
     loadChildren: () =>
@@ -31,7 +32,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/futures/futures.module').then((m) => m.FuturesModule),
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '',
+    component: MainLayoutComponent,
+    loadChildren: () =>
+      import('./modules/bills/bills.module').then((m) => m.BillsModule),
+  },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

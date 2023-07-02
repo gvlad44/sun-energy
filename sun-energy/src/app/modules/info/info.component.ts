@@ -5,11 +5,7 @@ import { combineLatestWith } from 'rxjs';
 import { ChartOptions } from 'src/app/components/chart/chart-options';
 import { Address, AddressResponse } from 'src/app/interfaces/address.interface';
 import { ChartData } from 'src/app/interfaces/chart.interface';
-import {
-  Panel,
-  PanelMetrics,
-  PanelResponse,
-} from 'src/app/interfaces/panel.interface';
+import { Panel, PanelResponse } from 'src/app/interfaces/panel.interface';
 import { AddressService } from 'src/app/services/address.service';
 import { PanelService } from 'src/app/services/panel.service';
 

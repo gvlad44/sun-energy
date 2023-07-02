@@ -4,6 +4,7 @@ import { addressController } from "../controllers/address.controller.ts";
 import { middlewares } from "../controllers/middleware.controller.ts";
 import { panelsController } from "../controllers/panels.controller.ts";
 import { futuresController } from "../controllers/futures.controller.ts";
+import { billsController } from "../controllers/bills.controller.ts";
 export const router = express.Router();
 
 //Auth routes
@@ -65,3 +66,7 @@ router.delete(
   middlewares.isAuth,
   futuresController.deleteListedFuture
 );
+
+//Bills routes
+router.post("/bills", billsController.generateBillForMonth);
+router.get("/bills/:id", billsController.getBillsForAddress);

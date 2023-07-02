@@ -62,7 +62,7 @@ export const addressController = {
       });
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "Failed to add a new address",
         });
       }
@@ -115,7 +115,7 @@ export const addressController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no addresses available",
         });
       }
@@ -141,7 +141,7 @@ export const addressController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no panels available",
         });
       }

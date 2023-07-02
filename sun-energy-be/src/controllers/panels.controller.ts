@@ -75,7 +75,7 @@ export const panelsController = {
       });
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "Failed to add panel",
         });
       }
@@ -99,7 +99,7 @@ export const panelsController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no panels available",
         });
       }
@@ -129,7 +129,7 @@ export const panelsController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no panels available",
         });
       }
@@ -155,7 +155,7 @@ export const panelsController = {
       const snapshot = await getDocs(q);
 
       if (!snapshot) {
-        res.status(400).send({
+        return res.status(400).send({
           message: "There are no panels available",
         });
       }

@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-header class="table-header">
-      <mat-card-title> Addresses </mat-card-title>
+      <mat-card-title> View addresses data </mat-card-title>
       <button mat-fab extended color="primary" (click)="addAddress()">
         <mat-icon> library_add </mat-icon>
         Add address
@@ -85,12 +85,17 @@
           <td mat-cell *matCellDef="let element">
             <button
               mat-icon-button
+              color="primary"
               [disabled]="disableContractExtension(element)"
               (click)="extendContract(element)"
             >
               <mat-icon> edit </mat-icon>
             </button>
-            <button mat-icon-button (click)="deleteContract(element)">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="deleteContract(element)"
+            >
               <mat-icon> delete </mat-icon>
             </button>
           </td>

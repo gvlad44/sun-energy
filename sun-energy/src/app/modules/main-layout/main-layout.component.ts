@@ -12,7 +12,7 @@ export class MainLayoutComponent implements OnInit {
   isExpanded: boolean = false;
   menuItems: MenuItem[] = [
     { routerLink: '/dashboard', icon: 'home', title: 'Dashboard' },
-    { routerLink: '/dashboard', icon: 'payments', title: 'Bills' },
+    { routerLink: '/bills', icon: 'payments', title: 'Bills' },
     {
       routerLink: '/future',
       icon: 'solar_power',

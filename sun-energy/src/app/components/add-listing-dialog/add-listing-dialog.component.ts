@@ -106,7 +106,7 @@ export class AddListingDialogComponent implements OnInit {
       this.selectedQuantity = this.quantityForAddresses[qIndex]
         ? this.quantityForAddresses[qIndex]
         : 0;
-      this.contractRate = this.addresses[qIndex].rate;
+      this.contractRate = this.addresses[qIndex].rate + 0.01;
       this.controls['price'].setValue(this.contractRate);
     });
     this.selectedAddress = this.addresses[0].address;

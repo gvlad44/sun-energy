@@ -1,0 +1,62 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header class="table-header">
+      <mat-card-title> View address bills </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        *ngIf="dataSource.length > 0"
+      >
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef>Address</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.address }} , {{ element.city }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.status }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="energy_rate">
+          <th mat-header-cell *matHeaderCellDef>Energy rate</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.rate + " RON/kWh" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contract_start_date">
+          <th mat-header-cell *matHeaderCellDef>Contract start date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.contractStartDate }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contract_end_date">
+          <th mat-header-cell *matHeaderCellDef>Contract end date</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.contractEndDate }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="navigateToAddressBillsPage(row)"
+        ></tr>
+      </table>
+      <div *ngIf="dataSource.length == 0" style="text-align: center">
+        <br />
+        <b> There are no addresses! Add one with the button above. </b>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
