@@ -69,4 +69,10 @@ router.delete(
 
 //Bills routes
 router.post("/bills", billsController.generateBillForMonth);
-router.get("/bills/:id", billsController.getBillsForAddress);
+router.post("/bills/pay", middlewares.isAuth, billsController.payBill);
+router.post("/webhooks", billsController.saveTransaction);
+router.get(
+  "/bills/:id",
+  middlewares.isAuth,
+  billsController.getBillsForAddress
+);

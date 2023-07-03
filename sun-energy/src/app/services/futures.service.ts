@@ -29,8 +29,8 @@ export class FuturesService {
     return this.http.get(`${this.apiPathOther}/bought`);
   }
 
-  buyListedFuture(id: string) {
-    return this.http.patch(`${this.apiPath}/${id}`, {});
+  buyListedFuture(id: string, buyerAddressId: string) {
+    return this.http.patch(`${this.apiPath}/${id}`, { buyerAddressId });
   }
 
   deleteListedFuture(id: string) {

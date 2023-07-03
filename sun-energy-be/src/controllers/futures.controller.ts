@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -26,6 +27,7 @@ interface Future {
   addressId: string;
   boughtAt: string;
   buyerId: string;
+  buyerAddressId: string;
 }
 
 interface FuturePayload {
@@ -54,6 +56,7 @@ export const futuresController = {
         addressId: reqData.addressId,
         boughtAt: "",
         buyerId: "",
+        buyerAddressId: "",
       });
 
       if (!snapshot) {
@@ -188,12 +191,32 @@ export const futuresController = {
     try {
       const buyerid = auth.currentUser.uid;
       const uuid = req.params.id;
+      const buyerAddressId = req.body.buyerAddressId;
 
       await updateDoc(doc(db, "futures", uuid), {
         boughtAt: moment(new Date(), "DD/MM/YYYY").format("DD/MM/YYYY"),
         buyerId: buyerid,
+        buyerAddressId: buyerAddressId,
       });
 
+      const snapshotAddress = await getDoc(
+        doc(db, "addresses", buyerAddressId)
+      );
+      const snapshotFuture = await getDoc(doc(db, "futures", uuid));
+
+      if (
+        moment(snapshotAddress.data().contractEndDate, "DD/MM/YYYY").isBefore(
+          moment(snapshotFuture.data().maturityDate, "DD/MM/YYYY"),
+          "month"
+        )
+      ) {
+        await updateDoc(doc(db, "addresses", buyerAddressId), {
+          contractEndDate: moment(
+            snapshotFuture.data().maturityDate,
+            "DD/MM/YYYY"
+          ).format("DD/MM/YYYY"),
+        });
+      }
       res.status(200).send({
         message: "Bought energy future successfully",
       });

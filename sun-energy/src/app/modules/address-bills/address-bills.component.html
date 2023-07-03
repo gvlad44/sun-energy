@@ -2,6 +2,15 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title *ngIf="address">
+        <button
+          mat-icon-button
+          extended
+          color="primary"
+          [matTooltip]="'Back'"
+          (click)="goBack()"
+        >
+          <mat-icon> arrow_back </mat-icon>
+        </button>
         Bills for address {{ address.address }}
       </mat-card-title>
     </mat-card-header>
@@ -32,7 +41,10 @@
             </div>
             <div class="content-row">
               <p>Energy rate: {{ bill.rate }} RON/kWh</p>
-              <p>Total (including listings): {{ computeTotal(bill) }}</p>
+              <p>
+                Total (including bought and sold futures):
+                {{ computeTotal(bill) }}
+              </p>
             </div>
             <div
               style="display: flex; justify-content: flex-end"
@@ -43,6 +55,7 @@
                 mat-raised-button
                 color="primary"
                 class="pay-btn"
+                (click)="payBill(bill)"
               >
                 Pay
               </button>

@@ -1,5 +1,5 @@
 export interface Bill {
-  uuid: string;
+  id: string;
   consumed: number;
   produced: number;
   rate: number;
@@ -13,4 +13,15 @@ export interface Bill {
 
 export interface BillResponse {
   results: Bill[];
+}
+
+export interface PaymentPayload {
+  billId: string;
+  total: number;
+  text: string;
+  addressId: string;
+}
+
+export interface PaymentResponse {
+  result: { url: string };
 }

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -52,7 +53,8 @@ export class InfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private panelService: PanelService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -162,5 +164,9 @@ export class InfoComponent implements OnInit {
 
   navigateToPanelsPage() {
     this.router.navigateByUrl(`/dashboard/${this.addressId}/panels`);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

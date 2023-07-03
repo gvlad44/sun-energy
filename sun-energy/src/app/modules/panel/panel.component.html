@@ -2,8 +2,17 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        Revenue and power generated in 2023 for {{ panel.name }}</mat-card-title
-      >
+        <button
+          mat-icon-button
+          extended
+          color="primary"
+          [matTooltip]="'Back'"
+          (click)="goBack()"
+        >
+          <mat-icon> arrow_back </mat-icon>
+        </button>
+        Revenue and power generated in 2023 for {{ panel.name }}
+      </mat-card-title>
     </mat-card-header>
     <br />
     <mat-card-content class="card-content">

@@ -16,7 +16,7 @@ export class MainLayoutComponent implements OnInit {
     {
       routerLink: '/future',
       icon: 'solar_power',
-      title: 'Buy and sell your energy',
+      title: 'Buy and sell energy',
     },
   ];
   user = '';

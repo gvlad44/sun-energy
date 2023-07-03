@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -46,7 +46,8 @@ export class MarketComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private futuresService: FuturesService
+    private futuresService: FuturesService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -89,5 +90,9 @@ export class MarketComponent implements OnInit {
 
   buyListedFuture(row) {
     this.openDialog(BuyListingDialogComponent, row.id);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

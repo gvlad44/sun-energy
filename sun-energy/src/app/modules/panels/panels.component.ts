@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
 import { Address, AddressResponse } from 'src/app/interfaces/address.interface';
 import { Panel, PanelResponse } from 'src/app/interfaces/panel.interface';
 import { AddressService } from 'src/app/services/address.service';
@@ -12,18 +12,18 @@ import { PanelService } from 'src/app/services/panel.service';
   templateUrl: './panels.component.html',
   styleUrls: ['./panels.component.scss'],
 })
-export class PanelsComponent implements OnInit, OnDestroy {
+export class PanelsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'output', 'produced'];
   dataSource: Panel[] = [];
   addressId: string = '';
   currentAddress!: Address;
-  subscription: Subscription = Subscription.EMPTY;
 
   constructor(
     private router: Router,
     private addressService: AddressService,
     private panelService: PanelService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -32,12 +32,8 @@ export class PanelsComponent implements OnInit, OnDestroy {
     this.initPanels();
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe;
-  }
-
   getAddressId() {
-    this.subscription = this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.addressId = params['id'];
     });
   }
@@ -71,5 +67,9 @@ export class PanelsComponent implements OnInit, OnDestroy {
 
   navigateToPanelPage(row) {
     this.router.navigateByUrl(`/dashboard/${this.addressId}/panels/${row.id}`);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

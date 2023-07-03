@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
@@ -39,9 +40,9 @@ export class PanelComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private panelService: PanelService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -102,5 +103,9 @@ export class PanelComponent implements OnInit {
       this.chartData.data[idx].values.reduce((a, b) => a + b, 0) /
       this.chartData.data[idx].values.length
     ).toFixed(2);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

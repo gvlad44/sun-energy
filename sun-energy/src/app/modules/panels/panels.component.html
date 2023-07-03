@@ -1,7 +1,18 @@
 <div class="container">
   <mat-card>
     <mat-card-header class="table-header">
-      <mat-card-title> Panels </mat-card-title>
+      <mat-card-title>
+        <button
+          mat-icon-button
+          extended
+          color="primary"
+          [matTooltip]="'Back'"
+          (click)="goBack()"
+        >
+          <mat-icon> arrow_back </mat-icon>
+        </button>
+        Panels
+      </mat-card-title>
     </mat-card-header>
     <br />
     <mat-card-content>
