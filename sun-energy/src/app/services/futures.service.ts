@@ -13,8 +13,16 @@ export class FuturesService {
     return this.http.post(`${this.apiPath}/sell`, futurePayload);
   }
 
+  getAllFutures() {
+    return this.http.get(`${this.apiPath}/all`);
+  }
+
   getUserListedFutures() {
     return this.http.get(`${this.apiPath}`);
+  }
+
+  getGeneratedRevenue() {
+    return this.http.get(`${this.apiPathOther}/generated`);
   }
 
   getAddressListedFutures(id: string) {

@@ -6,6 +6,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { combineLatestWith } from 'rxjs';
 import { Address, AddressResponse } from 'src/app/interfaces/address.interface';
 import {
@@ -40,7 +41,8 @@ export class AddressBillsComponent implements OnInit {
     private route: ActivatedRoute,
     private billsService: BillsService,
     private addressService: AddressService,
-    private location: Location
+    private location: Location,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -97,7 +99,7 @@ export class AddressBillsComponent implements OnInit {
   payBill(bill: Bill) {
     this.billsService
       .payBill({
-        total: bill.total,
+        total: Number(bill.total.toFixed(2)),
         text: 'Bill for ' + bill.dateBilled,
         addressId: this.addressId,
         billId: bill.id,
@@ -107,8 +109,10 @@ export class AddressBillsComponent implements OnInit {
           const url = (res as PaymentResponse).result.url;
           window.location.href = url;
         },
-        error: (err) => {
-          window.alert(err.message);
+        error: () => {
+          this.toastr.error(
+            'There was an issue with the request! Please try again!'
+          );
         },
       });
   }

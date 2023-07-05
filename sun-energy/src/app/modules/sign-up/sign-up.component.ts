@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -23,7 +24,11 @@ export class SignUpComponent {
     return this.formGroup.controls;
   }
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   registerUser() {
     this.authService
@@ -33,10 +38,13 @@ export class SignUpComponent {
       })
       .subscribe({
         next: () => {
+          this.toastr.success('Signed up successfully!');
           this.router.navigateByUrl('/login');
         },
-        error: (err) => {
-          window.alert(err.message);
+        error: () => {
+          this.toastr.error(
+            'There was an issue with the request! Please try again!'
+          );
         },
       });
   }

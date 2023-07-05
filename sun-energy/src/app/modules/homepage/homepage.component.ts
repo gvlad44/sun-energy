@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserResponse } from 'src/app/interfaces/user-auth.interface';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -20,7 +21,11 @@ export class HomepageComponent {
     return this.formGroup.controls;
   }
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   login() {
     this.authService
@@ -32,9 +37,12 @@ export class HomepageComponent {
         next: (res) => {
           const userRes = res as any as UserResponse;
           this.authService.saveUserData(userRes.result);
+          this.toastr.success('Logged in successfully!');
           this.router.navigateByUrl('/dashboard');
         },
-        error: () => {},
+        error: () => {
+          this.toastr.error('Invalid email/password!');
+        },
       });
   }
 

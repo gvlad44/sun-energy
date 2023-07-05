@@ -17,6 +17,7 @@ import { FuturesComponent } from '../futures/futures.component';
 import { MarketComponent } from '../market/market.component';
 import { BillsComponent } from '../bills/bills.component';
 import { AddressBillsComponent } from '../address-bills/address-bills.component';
+import { DataComponent } from '../data/data.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
             component: AddressBillsComponent,
           },
         ],
+      },
+      {
+        path: 'data',
+        component: DataComponent,
       },
     ],
   },

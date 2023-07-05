@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './modules/main-layout/main-layout.component';
+import { ResetComponent } from './modules/reset/reset.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -10,13 +11,15 @@ const routes: Routes = [
       import('./modules/homepage/homepage.module').then(
         (m) => m.HomepageModule
       ),
-    pathMatch: 'full',
   },
   {
     path: 'signup',
     loadChildren: () =>
       import('./modules/sign-up/sign-up.module').then((m) => m.SignUpModule),
-    pathMatch: 'full',
+  },
+  {
+    path: 'reset',
+    component: ResetComponent,
   },
   {
     path: '',

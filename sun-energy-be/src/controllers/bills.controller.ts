@@ -59,7 +59,7 @@ export const billsController = {
 
       const futuresQ = query(
         collection(db, "futures"),
-        where("userId", "==", "uOSkjQAAKgXAO1RMMOwQy32UL7b2")
+        where("userId", "==", reqData.userid)
       );
 
       const snapshotFutures = await getDocs(futuresQ);
@@ -77,7 +77,7 @@ export const billsController = {
 
       const panelsQ = query(
         collection(db, "panels"),
-        where("userId", "==", "uOSkjQAAKgXAO1RMMOwQy32UL7b2")
+        where("userId", "==", reqData.userid)
       );
 
       const snapshotPanels = await getDocs(panelsQ);
@@ -96,8 +96,9 @@ export const billsController = {
       let panelsProduced = 0;
       for (const future of addressFutures as any) {
         if (
+          future.boughtAt.length > 0 &&
           date.isBetween(
-            moment(future.createdAt, "DD/MM/YYYY"),
+            moment(future.boughtAt, "DD/MM/YYYY"),
             moment(future.maturityDate, "DD/MM/YYYY"),
             "month",
             "(]"
@@ -107,7 +108,7 @@ export const billsController = {
             for (const metric of panel.metrics) {
               if (
                 moment(metric.timestamp, "MM/YYYY").isBetween(
-                  moment(future.createdAt, "DD/MM/YYYY"),
+                  moment(future.boughtAt, "DD/MM/YYYY"),
                   moment(future.maturityDate, "DD/MM/YYYY"),
                   "month",
                   "(]"
@@ -146,7 +147,7 @@ export const billsController = {
 
       const boughtQ = query(
         collection(db, "futures"),
-        where("buyerId", "==", "FnZE4hMEacbySq6NqsBnDV6xwCA3")
+        where("buyerId", "==", reqData.userid)
       );
 
       const snapshotBought = await getDocs(boughtQ);
@@ -162,8 +163,9 @@ export const billsController = {
 
       for (const future of addressBought as any) {
         if (
+          future.boughtAt.length > 0 &&
           date.isBetween(
-            moment(future.createdAt, "DD/MM/YYYY"),
+            moment(future.boughtAt, "DD/MM/YYYY"),
             moment(future.maturityDate, "DD/MM/YYYY"),
             "month",
             "(]"
@@ -172,7 +174,7 @@ export const billsController = {
           for (const metric of address.data().consumed) {
             if (
               moment(metric.timestamp, "MM/YYYY").isBetween(
-                moment(future.createdAt, "DD/MM/YYYY"),
+                moment(future.boughtAt, "DD/MM/YYYY"),
                 moment(future.maturityDate, "DD/MM/YYYY"),
                 "month",
                 "(]"
@@ -231,7 +233,7 @@ export const billsController = {
         message: "Created bill",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error while generating bill",
       });
     }
@@ -251,7 +253,7 @@ export const billsController = {
               product_data: {
                 name: reqData.text,
               },
-              unit_amount: reqData.total * 100,
+              unit_amount: Math.round(reqData.total * 100),
             },
             quantity: 1,
           },
@@ -267,7 +269,7 @@ export const billsController = {
         result: { url: session.url },
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to pay the bill",
       });
     }
@@ -307,7 +309,7 @@ export const billsController = {
         message: "Saved transaction successfully",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to save transaction",
       });
     }
@@ -338,8 +340,53 @@ export const billsController = {
           }),
       });
     } catch (err) {
-      res.status(400).send({
-        message: "Failed to get all panels",
+      res.status(500).send({
+        message: "Failed to get all bills",
+      });
+    }
+  },
+
+  getAllBillsRevenue: async (req, res) => {
+    try {
+      const q = query(collection(db, "bills"));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        return res.status(400).send({
+          message: "There are no bills available",
+        });
+      }
+
+      const bills = snapshot.docs;
+      const revenue = [];
+
+      for (let i = 0; i <= 11; i++) {
+        const metric = { value: 0, timestamp: "" };
+        metric.timestamp = moment().month(i).format("MMMM YYYY");
+        metric.value +=
+          bills.filter(
+            (bill) => moment(bill.data().dateBilled, "MMMM YYYY").month() == i
+          ).length > 0
+            ? bills
+                .filter(
+                  (bill) =>
+                    moment(bill.data().dateBilled, "MMMM YYYY").month() == i
+                )
+                .map((bill) => bill.data().total)
+                .reduce((a, b) => a + b, 0)
+            : 0;
+
+        metric.value = Number(metric.value.toFixed(2));
+        revenue.push(metric);
+      }
+
+      res.status(200).send({
+        results: revenue,
+      });
+    } catch (err) {
+      res.status(500).send({
+        message: "Failed to get all bills",
       });
     }
   },

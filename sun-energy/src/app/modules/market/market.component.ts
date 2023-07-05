@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ToastrService } from 'ngx-toastr';
 import { BuyListingDialogComponent } from 'src/app/components/buy-listing-dialog/buy-listing-dialog.component';
 import { Future, FutureResponse } from 'src/app/interfaces/futures.interface';
 import { FuturesService } from 'src/app/services/futures.service';
@@ -47,7 +48,8 @@ export class MarketComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private futuresService: FuturesService,
-    private location: Location
+    private location: Location,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -84,7 +86,10 @@ export class MarketComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(({ success }) => {
-      if (success) this.initTable();
+      if (success) {
+        this.toastr.success('Action finalized with success!');
+        this.initTable();
+      }
     });
   }
 

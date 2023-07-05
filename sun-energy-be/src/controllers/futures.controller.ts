@@ -69,7 +69,7 @@ export const futuresController = {
         message: "Created new list item",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error when adding a new list item",
       });
     }
@@ -89,13 +89,13 @@ export const futuresController = {
         });
       }
 
-      res.status(200).send({
+      res.status(201).send({
         results: snapshot.docs.map((doc) => {
           return { id: doc.id, ...doc.data() };
         }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get all listed energy futures",
       });
     }
@@ -124,7 +124,47 @@ export const futuresController = {
           }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
+        message: "Failed to get all listed energy futures",
+      });
+    }
+  },
+
+  getGeneratedRevenueForUser: async (req, res) => {
+    try {
+      const userid = auth.currentUser.uid;
+
+      const q = query(collection(db, "futures"), where("userId", "==", userid));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        return res.status(400).send({
+          message: "There are no listed energy futures",
+        });
+      }
+
+      const futures = snapshot.docs.filter(
+        (doc) => doc.data().buyerId.length > 0
+      );
+
+      const addresses = await getDocs(collection(db, "addresses"));
+
+      let revenue = 0;
+      for (const doc of futures) {
+        revenue +=
+          doc.data().quantity *
+          (doc.data().rate -
+            addresses.docs
+              .find((address) => address.id == doc.data().addressId)
+              .data().rate);
+      }
+
+      res.status(200).send({
+        result: Number(revenue.toFixed(2)),
+      });
+    } catch (err) {
+      res.status(500).send({
         message: "Failed to get all listed energy futures",
       });
     }
@@ -152,7 +192,33 @@ export const futuresController = {
           }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
+        message: "Failed to get all listed energy futures",
+      });
+    }
+  },
+
+  getAllFutures: async (req, res) => {
+    try {
+      const q = query(collection(db, "futures"));
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot) {
+        return res.status(400).send({
+          message: "There are no listed energy futures",
+        });
+      }
+
+      res.status(200).send({
+        results: snapshot.docs
+          .filter((doc) => doc.data().boughtAt.length > 0)
+          .map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          }),
+      });
+    } catch (err) {
+      res.status(500).send({
         message: "Failed to get all listed energy futures",
       });
     }
@@ -181,7 +247,7 @@ export const futuresController = {
         }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get all bought energy futures",
       });
     }
@@ -221,7 +287,7 @@ export const futuresController = {
         message: "Bought energy future successfully",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to buy energy future",
       });
     }
@@ -237,7 +303,7 @@ export const futuresController = {
         message: "Deleted listed energy future",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to delete listing",
       });
     }

@@ -9,6 +9,7 @@ export const router = express.Router();
 
 //Auth routes
 router.post("/register", userController.register);
+router.post("/reset", userController.resetPassword);
 router.post("/login", userController.login);
 router.get("/logout", userController.logout);
 
@@ -40,6 +41,7 @@ router.get("/panel/:id", middlewares.isAuth, panelsController.getPanel);
 
 //Futures routes
 router.post("/futures/sell", middlewares.isAuth, futuresController.listFuture);
+router.get("/futures/all", middlewares.isAuth, futuresController.getAllFutures);
 router.get(
   "/futures/:id",
   middlewares.isAuth,
@@ -49,6 +51,11 @@ router.get(
   "/futures",
   middlewares.isAuth,
   futuresController.getUserListedFutures
+);
+router.get(
+  "/generated",
+  middlewares.isAuth,
+  futuresController.getGeneratedRevenueForUser
 );
 router.get(
   "/available",
@@ -76,3 +83,4 @@ router.get(
   middlewares.isAuth,
   billsController.getBillsForAddress
 );
+router.get("/bills", middlewares.isAuth, billsController.getAllBillsRevenue);

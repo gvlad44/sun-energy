@@ -12,6 +12,10 @@ export class AuthService {
     return this.http.post(`${this.apiPath}/register`, user);
   }
 
+  reset(payload: { email: string }) {
+    return this.http.post(`${this.apiPath}/reset`, payload);
+  }
+
   login(user: UserAuth) {
     return this.http.post(`${this.apiPath}/login`, user);
   }

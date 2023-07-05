@@ -44,7 +44,6 @@ export class PanelsComponent implements OnInit {
         const res = apiRes as AddressResponse;
         this.currentAddress = res.results[0];
       },
-      error: () => {},
     });
   }
 
@@ -55,7 +54,9 @@ export class PanelsComponent implements OnInit {
         res.results.sort((a, b) => a.name.localeCompare(b.name));
         this.dataSource = res.results;
       },
-      error: () => {},
+      error: () => {
+        this.dataSource = [];
+      },
     });
   }
 

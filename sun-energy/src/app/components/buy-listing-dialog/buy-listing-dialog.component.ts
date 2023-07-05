@@ -10,6 +10,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ToastrService } from 'ngx-toastr';
 import { Address, AddressResponse } from 'src/app/interfaces/address.interface';
 import { AddressService } from 'src/app/services/address.service';
 import { FuturesService } from 'src/app/services/futures.service';
@@ -46,7 +47,8 @@ export class BuyListingDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<BuyListingDialogComponent>,
     private futuresService: FuturesService,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -59,7 +61,9 @@ export class BuyListingDialogComponent implements OnInit {
         this.addresses = (res as AddressResponse).results;
         this.initAddressesSelect();
       },
-      error: (err) => {},
+      error: () => {
+        this.addresses = [];
+      },
     });
   }
 
@@ -82,8 +86,10 @@ export class BuyListingDialogComponent implements OnInit {
         next: () => {
           this.dialogRef.close({ success: true });
         },
-        error: (err) => {
-          window.alert(err.message);
+        error: () => {
+          this.toastr.error(
+            'There was an issue with the request! Please try again!'
+          );
         },
       });
   }

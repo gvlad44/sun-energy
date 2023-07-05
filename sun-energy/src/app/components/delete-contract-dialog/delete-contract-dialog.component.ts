@@ -10,6 +10,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ToastrService } from 'ngx-toastr';
 import { Address } from 'src/app/interfaces/address.interface';
 import { AddressService } from 'src/app/services/address.service';
 
@@ -33,7 +34,8 @@ export class DeleteContractDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteContractDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Address,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private toastr: ToastrService
   ) {}
 
   deleteContract() {
@@ -41,8 +43,10 @@ export class DeleteContractDialogComponent {
       next: () => {
         this.dialogRef.close({ success: true });
       },
-      error: (err) => {
-        window.alert(err.message);
+      error: () => {
+        this.toastr.error(
+          'There was an issue with the request! Please try again!'
+        );
       },
     });
   }

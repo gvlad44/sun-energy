@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AddressService } from 'src/app/services/address.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-address-dialog',
@@ -49,7 +50,8 @@ export class AddAddressDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddAddressDialogComponent>,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private toastr: ToastrService
   ) {}
 
   validateForm() {
@@ -87,8 +89,10 @@ export class AddAddressDialogComponent {
         next: () => {
           this.dialogRef.close({ success: true });
         },
-        error: (err) => {
-          window.alert(err.message);
+        error: () => {
+          this.toastr.error(
+            'There was an issue with the request! Please try again!'
+          );
         },
       });
   }

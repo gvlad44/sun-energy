@@ -16,6 +16,7 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { ToastrService } from 'ngx-toastr';
 import { combineLatestWith } from 'rxjs';
 import { Address, AddressResponse } from 'src/app/interfaces/address.interface';
 import { Future, FutureResponse } from 'src/app/interfaces/futures.interface';
@@ -72,7 +73,8 @@ export class AddListingDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private addressService: AddressService,
     private panelService: PanelService,
-    private futuresService: FuturesService
+    private futuresService: FuturesService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -154,8 +156,10 @@ export class AddListingDialogComponent implements OnInit {
         next: () => {
           this.dialogRef.close({ success: true });
         },
-        error: (err) => {
-          window.alert(err.message);
+        error: () => {
+          this.toastr.error(
+            'There was an issue with the request! Please try again!'
+          );
         },
       });
   }

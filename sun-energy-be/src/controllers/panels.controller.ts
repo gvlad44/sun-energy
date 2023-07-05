@@ -84,7 +84,7 @@ export const panelsController = {
         message: "Created panel",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error when adding a new panel",
       });
     }
@@ -104,13 +104,13 @@ export const panelsController = {
         });
       }
 
-      res.status(200).send({
+      res.status(201).send({
         results: snapshot.docs.map((doc) => {
           return { id: doc.id, ...doc.data() };
         }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get all panels",
       });
     }
@@ -140,7 +140,7 @@ export const panelsController = {
         }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get all panels",
       });
     }
@@ -168,7 +168,7 @@ export const panelsController = {
           }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get panel",
       });
     }

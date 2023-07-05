@@ -34,7 +34,9 @@ export class BillsComponent {
         res.results.sort((a, b) => a.address.localeCompare(b.address));
         this.dataSource = res.results;
       },
-      error: () => {},
+      error: () => {
+        this.dataSource = [];
+      },
     });
   }
 

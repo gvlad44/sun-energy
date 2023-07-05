@@ -15,4 +15,8 @@ export class BillsService {
   payBill(payload: PaymentPayload) {
     return this.http.post(`${this.apiPath}/pay`, payload);
   }
+
+  getAllBillsRevenue() {
+    return this.http.get(`${this.apiPath}`);
+  }
 }

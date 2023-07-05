@@ -1,8 +1,10 @@
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { firebaseConfig } from "../config/db.ts";
 
@@ -33,7 +35,7 @@ export const userController = {
         message: "User created",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "E-mail already in use",
       });
     }
@@ -62,8 +64,24 @@ export const userController = {
         },
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error while logging in",
+      });
+    }
+  },
+
+  resetPassword: async (req, res) => {
+    try {
+      const reqData = req.body;
+
+      await sendPasswordResetEmail(auth, reqData.email);
+
+      res.status(200).send({
+        message: "Successfully sent email",
+      });
+    } catch (err) {
+      res.status(500).send({
+        message: "Error while sending email",
       });
     }
   },
@@ -76,7 +94,7 @@ export const userController = {
         message: "Logged out",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error while logging out",
       });
     }

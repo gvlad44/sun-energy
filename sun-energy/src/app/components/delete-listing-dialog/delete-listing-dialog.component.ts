@@ -7,6 +7,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ToastrService } from 'ngx-toastr';
 import { FuturesService } from 'src/app/services/futures.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class DeleteListingDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DeleteListingDialogComponent>,
-    private futuresService: FuturesService
+    private futuresService: FuturesService,
+    private toastr: ToastrService
   ) {}
 
   deleteListing() {
@@ -34,8 +36,10 @@ export class DeleteListingDialogComponent {
       next: () => {
         this.dialogRef.close({ success: true });
       },
-      error: (err) => {
-        window.alert(err.message);
+      error: () => {
+        this.toastr.error(
+          'There was an issue with the request! Please try again!'
+        );
       },
     });
   }

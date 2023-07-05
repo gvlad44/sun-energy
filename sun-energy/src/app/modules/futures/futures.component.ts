@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AddListingDialogComponent } from 'src/app/components/add-listing-dialog/add-listing-dialog.component';
 import { DeleteListingDialogComponent } from 'src/app/components/delete-listing-dialog/delete-listing-dialog.component';
 import { Future, FutureResponse } from 'src/app/interfaces/futures.interface';
@@ -20,6 +21,7 @@ export class FuturesComponent implements OnInit {
     'total',
     'maturityDate',
     'createdAt',
+    'boughtAt',
     'status',
     'actions',
   ];
@@ -37,15 +39,19 @@ export class FuturesComponent implements OnInit {
   dataSourceBought!: MatTableDataSource<Future>;
   @ViewChild('paginatorBought') paginatorBought!: MatPaginator;
 
+  revenue = 0;
+
   constructor(
     private dialog: MatDialog,
     private futuresService: FuturesService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
     this.initTable();
     this.initBoughtTable();
+    this.getRevenue();
   }
 
   initTable() {
@@ -53,10 +59,13 @@ export class FuturesComponent implements OnInit {
       next: (apiRes) => {
         const res = apiRes as FutureResponse;
         res.results.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
-        this.dataSource = new MatTableDataSource<Future>(res.results);
+        this.dataSource = new MatTableDataSource<Future>(res.results.reverse());
         this.dataSource.paginator = this.paginator;
       },
-      error: () => {},
+      error: () => {
+        this.dataSource = new MatTableDataSource<Future>([]);
+        this.dataSource.paginator = this.paginator;
+      },
     });
   }
 
@@ -74,10 +83,15 @@ export class FuturesComponent implements OnInit {
       next: (apiRes) => {
         const res = apiRes as FutureResponse;
         res.results.sort((a, b) => a.boughtAt.localeCompare(b.boughtAt));
-        this.dataSourceBought = new MatTableDataSource<Future>(res.results);
+        this.dataSourceBought = new MatTableDataSource<Future>(
+          res.results.reverse()
+        );
         this.dataSourceBought.paginator = this.paginatorBought;
       },
-      error: () => {},
+      error: () => {
+        this.dataSourceBought = new MatTableDataSource<Future>([]);
+        this.dataSourceBought.paginator = this.paginator;
+      },
     });
   }
 
@@ -99,7 +113,21 @@ export class FuturesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(({ success }) => {
-      if (success) this.initTable();
+      if (success) {
+        this.toastr.success('Action finalized with success!');
+        this.initTable();
+      }
+    });
+  }
+
+  getRevenue() {
+    this.futuresService.getGeneratedRevenue().subscribe({
+      next: (apiRes) => {
+        this.revenue = (apiRes as any).result;
+      },
+      error: () => {
+        this.revenue = 0;
+      },
     });
   }
 

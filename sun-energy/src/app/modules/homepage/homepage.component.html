@@ -35,13 +35,14 @@
                 hidePassword ? "visibility_off" : "visibility"
               }}</mat-icon>
             </button>
+            <mat-hint align="end">
+              <a [routerLink]="['/reset']"> Forgot your password? </a>
+            </mat-hint>
           </mat-form-field>
-          <!-- TODO: Add reset password functionality -->
-          <p>Forgot your password?</p>
-          <br />
         </form>
       </mat-card-content>
       <mat-card-actions class="center">
+        <br />
         <button
           mat-raised-button
           disableRipple="true"

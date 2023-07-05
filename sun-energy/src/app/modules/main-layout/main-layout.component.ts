@@ -18,6 +18,11 @@ export class MainLayoutComponent implements OnInit {
       icon: 'solar_power',
       title: 'Buy and sell energy',
     },
+    {
+      routerLink: '/data',
+      icon: 'analytics',
+      title: 'View company data',
+    },
   ];
   user = '';
 
@@ -32,7 +37,6 @@ export class MainLayoutComponent implements OnInit {
       next: () => {
         this.router.navigateByUrl('/login');
       },
-      error: () => {},
     });
   }
 

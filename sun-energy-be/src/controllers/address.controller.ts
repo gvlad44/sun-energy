@@ -71,7 +71,7 @@ export const addressController = {
         message: "Created address",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Error when adding a new address",
       });
     }
@@ -94,11 +94,11 @@ export const addressController = {
         consumed: consumed,
       });
 
-      res.status(200).send({
+      res.status(201).send({
         message: "Added new index",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to submit new index",
       });
     }
@@ -126,7 +126,7 @@ export const addressController = {
         }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get all addresses",
       });
     }
@@ -154,7 +154,7 @@ export const addressController = {
           }),
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to get panel",
       });
     }
@@ -173,7 +173,7 @@ export const addressController = {
         message: "Extended contract successfully",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to extend address contract",
       });
     }
@@ -191,7 +191,7 @@ export const addressController = {
         message: "Launched contract deletion successfully",
       });
     } catch (err) {
-      res.status(400).send({
+      res.status(500).send({
         message: "Failed to launch contract deletion ",
       });
     }

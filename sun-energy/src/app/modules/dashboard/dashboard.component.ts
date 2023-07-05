@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { AddAddressDialogComponent } from 'src/app/components/add-address-dialog/add-address-dialog.component';
 import { DeleteContractDialogComponent } from 'src/app/components/delete-contract-dialog/delete-contract-dialog.component';
 import { ExtendContractDialogComponent } from 'src/app/components/extend-contract-dialog/extend-contract-dialog.component';
@@ -27,7 +28,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private addressService: AddressService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -41,7 +43,9 @@ export class DashboardComponent implements OnInit {
         res.results.sort((a, b) => a.address.localeCompare(b.address));
         this.dataSource = res.results;
       },
-      error: () => {},
+      error: () => {
+        this.dataSource = [];
+      },
     });
   }
 
@@ -54,7 +58,10 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(({ success }) => {
-      if (success) this.initAddresses();
+      if (success) {
+        this.toastr.success('Action finalized with success!');
+        this.initAddresses();
+      }
     });
   }
 

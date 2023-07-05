@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Revenue generated in 2023 for Sun Energy
+      </mat-card-title>
+    </mat-card-header>
+    <br />
+    <mat-card-content>
+      <div class="chart">
+        <div echarts [options]="options"></div>
+      </div>
+      <div class="info-paragraph">
+        <br />
+        <h2>Revenue totals</h2>
+        <p>Revenue generated for the year 2023: {{ computeTotal() }} RON</p>
+        <p>
+          Revenue generated from futures commissions:
+          {{ computeFuturesTotal() }} RON
+        </p>
+        <p>
+          Revenue generated from selling energy: {{ computeBillsTotal() }} RON
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

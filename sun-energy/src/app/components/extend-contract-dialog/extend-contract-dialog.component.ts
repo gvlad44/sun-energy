@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Address } from 'src/app/interfaces/address.interface';
 import { AddressService } from 'src/app/services/address.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-extend-contract-dialog',
@@ -41,7 +42,8 @@ export class ExtendContractDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ExtendContractDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Address,
-    private addressService: AddressService
+    private addressService: AddressService,
+    private toastr: ToastrService
   ) {}
 
   extendContract() {
@@ -53,8 +55,10 @@ export class ExtendContractDialogComponent {
       next: () => {
         this.dialogRef.close({ success: true });
       },
-      error: (err) => {
-        window.alert(err.message);
+      error: () => {
+        this.toastr.error(
+          'There was an issue with the request! Please try again!'
+        );
       },
     });
   }
