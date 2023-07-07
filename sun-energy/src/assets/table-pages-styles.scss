@@ -1,0 +1,33 @@
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 8rem;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+.disabled {
+  pointer-events: none;
+  background-color: #eeeeee;
+}
+
+.mdc-data-table__header-cell {
+  text-align: center;
+}
+
+.mdc-data-table__cell {
+  text-align: center;
+}

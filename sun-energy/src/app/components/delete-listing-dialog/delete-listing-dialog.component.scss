@@ -1,13 +1,1 @@
-.content {
-  display: flex;
-  flex-direction: column;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-}
-
-.btn-dialog {
-  width: 45%;
-}
+@import "../../../assets/dialog-styles.scss";

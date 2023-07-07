@@ -1,0 +1,41 @@
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("./bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-card {
+  width: 30%;
+}
+
+.login-card-spacing {
+  margin: 0 16px;
+}
+
+.login-card-content {
+  width: 100%;
+}
+
+.label-padding {
+  padding: 0 8px 0 16px;
+}
+
+.login-card-btn {
+  width: 95%;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: #3f51b5;
+}
